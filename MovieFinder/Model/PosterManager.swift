@@ -9,7 +9,7 @@ import Foundation
 
 struct PosterManager {
        
-    let posterURL = "https://image.tmdb.org/t/p/w500"
+    let posterURL = "https://image.tmdb.org/t/p/w300"
         
     func fetchPosterURL(posterPath: String) -> String{
         

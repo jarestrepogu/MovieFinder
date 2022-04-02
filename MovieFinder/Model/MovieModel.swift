@@ -8,9 +8,10 @@
 import Foundation
 
 struct MovieModel {
-    let title: String
-    let overview: String
-    let popularity: Double
-    let posterPath: String?
+    
+    var title: String
+    var overview: String
+    var votes: Double
+    var posterPath: String?
     
 }

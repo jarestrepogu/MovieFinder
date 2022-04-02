@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     
     private var movieManager = MovieManager()
     private var posterManager = PosterManager()
+    private let webHelper = WebHelper()
+    private let apiKey = ApiKeys()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +52,7 @@ extension ViewController: UITextFieldDelegate{
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let movie = searchTextField.text {
-            movieManager.fetchMovie(movieTitle: movie)
+            movieManager.fetchMovie(url: webHelper.apiURL(movieTitle: movie, apiKey: apiKey.tmdbKey))
         }
         searchTextField.text = ""
     }
@@ -60,11 +62,11 @@ extension ViewController: UITextFieldDelegate{
 //MARK: - MovieManagerDelegate
 
 extension ViewController: MovieManagerDelegate{
-    func didUpdateMovie(_ movieManager: MovieManager, movie: MovieModel) {
-        print(movie.overview)
+    func didUpdateMovie(_ movieManager: MovieManager, movie: [MovieModel]) {
+        print(movie[0].overview)
         
         DispatchQueue.main.async {
-            if let poster = movie.posterPath {
+            if let poster = movie[0].posterPath {
                 let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
                 self.imageTest.kf.setImage(with: posterURL)
             }
