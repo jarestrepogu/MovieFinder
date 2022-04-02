@@ -8,9 +8,7 @@
 import UIKit
 import Kingfisher
 
-class MainViewController: UIViewController, UITableViewDataSource {
-    
-    @IBOutlet var tableView: UITableView!
+class MainViewController: UITableViewController{
     
     private var movieManager = MovieManager()
     private var posterManager = PosterManager()
@@ -18,30 +16,33 @@ class MainViewController: UIViewController, UITableViewDataSource {
     private let apiKey = ApiKeys()
     
     private var trendingMovies = [MovieModel]()
-
+    private var searchQuery = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         movieManager.delegate = self
-        movieManager.fetchMovie(url: webHelper.trendingURL(apiKey: apiKey.tmdbKey))
+        movieManager.fetchMovie(url: webHelper.trendingMovieURL(apiKey: apiKey.tmdbKey))
         
         tableView.dataSource = self
         tableView.register(UINib.init(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         
         tableView.rowHeight = 175
-                
+        
     }
     //MARK: - Search Button Pressed
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+        
         var textField = UITextField()
         
-        let alert = UIAlertController(title: "Search movie", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Search for a movie", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Search", style: .default) { (action) in
             
             if textField.text != ""{
                 if let movie = textField.text{
-                    self.movieManager.fetchMovie(url: self.webHelper.apiURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
+                    self.searchQuery = movie
+                    self.performSegue(withIdentifier: "goToResult", sender: self)
                     print("Searching...\(movie)")
                 }               
             } else {
@@ -53,17 +54,25 @@ class MainViewController: UIViewController, UITableViewDataSource {
             textField = alertTextField
         }
         alert.addAction(action)
-        present(alert, animated: true, completion: nil)
         
+        present(alert, animated: true, completion: nil)
+               
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToResult"{
+            let  destinationVC = segue.destination as! ResultsViewController
+            destinationVC.setQuery(searchQuery)
+        }
     }
     
     // MARK: - Table view data source
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trendingMovies.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let movie = trendingMovies[indexPath.row]
         
@@ -84,7 +93,7 @@ class MainViewController: UIViewController, UITableViewDataSource {
 
 extension MainViewController: MovieManagerDelegate{
     func didUpdateMovie(_ movieManager: MovieManager, movie: [MovieModel]) {
-                
+        
         trendingMovies = movie
         
         DispatchQueue.main.async {

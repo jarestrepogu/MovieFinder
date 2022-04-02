@@ -11,7 +11,7 @@ struct WebHelper {
     
     var page: String = "1"
         
-    func apiURL(movieTitle: String, apiKey: String) -> URL {
+    func searchMovieURL(movieTitle: String, apiKey: String) -> URL {
         var url = URLComponents()
         url.host = "api.themoviedb.org"
         url.scheme = "https"
@@ -24,7 +24,7 @@ struct WebHelper {
         return URL(string: url.string!)!
     }
     
-    func trendingURL(apiKey: String) -> URL{var url = URLComponents()
+    func trendingMovieURL(apiKey: String) -> URL{var url = URLComponents()
       
         url.host = "api.themoviedb.org"
         url.scheme = "https"

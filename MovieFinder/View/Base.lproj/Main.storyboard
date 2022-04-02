@@ -14,8 +14,12 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QRw-h7-82l">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.017378815836878687" green="0.062130566796295791" blue="0.13321382705479451" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
@@ -34,14 +38,17 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CJH-MI-U2v">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <connections>
                             <outlet property="dataSource" destination="OZr-B7-y6E" id="Bht-6l-y6I"/>
                             <outlet property="delegate" destination="OZr-B7-y6E" id="4uV-2N-Kb4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Trending Movies" id="bHT-Dk-D0B">
-                        <barButtonItem key="rightBarButtonItem" title="Search" id="I2k-fy-bHp">
+                    <navigationItem key="navigationItem" title="Trending Movies" largeTitleDisplayMode="always" id="bHT-Dk-D0B">
+                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="I2k-fy-bHp">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="searchButtonPressed:" destination="OZr-B7-y6E" id="xlK-gd-3kF"/>
                             </connections>
@@ -49,14 +56,34 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="CJH-MI-U2v" id="E73-mp-Hus"/>
+                        <segue destination="4PL-GD-Pym" kind="presentation" identifier="goToResult" id="eGi-vW-hqr"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="68n-eh-lc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="65" y="72"/>
         </scene>
+        <!--Results View Controller-->
+        <scene sceneID="wMz-2H-JTG">
+            <objects>
+                <tableViewController id="4PL-GD-Pym" customClass="ResultsViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ymO-Hf-2HX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="4PL-GD-Pym" id="B7G-K2-dKn"/>
+                            <outlet property="delegate" destination="4PL-GD-Pym" id="r0J-Vx-2HD"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ENJ-cP-jPE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="72"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
