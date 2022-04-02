@@ -15,7 +15,6 @@
 		3EA91EFA27F4F95D0085466B /* PosterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA91EF927F4F95D0085466B /* PosterManager.swift */; };
 		3EBB0DAB27F22CBE00F589FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB0DAA27F22CBE00F589FC /* AppDelegate.swift */; };
 		3EBB0DAD27F22CBE00F589FC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB0DAC27F22CBE00F589FC /* SceneDelegate.swift */; };
-		3EBB0DAF27F22CBE00F589FC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB0DAE27F22CBE00F589FC /* ViewController.swift */; };
 		3EBB0DB227F22CBE00F589FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB0DB027F22CBE00F589FC /* Main.storyboard */; };
 		3EBB0DB527F22CBE00F589FC /* MovieFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB0DB327F22CBE00F589FC /* MovieFinder.xcdatamodeld */; };
 		3EBB0DB727F22CC800F589FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB0DB627F22CC800F589FC /* Assets.xcassets */; };
@@ -37,7 +36,6 @@
 		3EBB0DA727F22CBE00F589FC /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBB0DAA27F22CBE00F589FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3EBB0DAC27F22CBE00F589FC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3EBB0DAE27F22CBE00F589FC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3EBB0DB127F22CBE00F589FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3EBB0DB427F22CBE00F589FC /* MovieFinder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieFinder.xcdatamodel; sourceTree = "<group>"; };
 		3EBB0DB627F22CC800F589FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 		3EBB0DC827F29F0200F589FC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3EBB0DAE27F22CBE00F589FC /* ViewController.swift */,
 				3E79CB9427F6285000FDDD9E /* MainViewController.swift */,
 			);
 			path = Controller;
@@ -217,7 +214,6 @@
 				3EBB0DCF27F2A05C00F589FC /* MovieData.swift in Sources */,
 				3E79CB9527F6285000FDDD9E /* MainViewController.swift in Sources */,
 				3EBB0DB527F22CBE00F589FC /* MovieFinder.xcdatamodeld in Sources */,
-				3EBB0DAF27F22CBE00F589FC /* ViewController.swift in Sources */,
 				3E79CB8F27F6197D00FDDD9E /* MovieCell.swift in Sources */,
 				3EA91EFA27F4F95D0085466B /* PosterManager.swift in Sources */,
 				3EBB0DCC27F29F4F00F589FC /* MovieManager.swift in Sources */,

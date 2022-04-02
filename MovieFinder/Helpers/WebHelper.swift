@@ -25,7 +25,7 @@ struct WebHelper {
     }
     
     func trendingURL(apiKey: String) -> URL{var url = URLComponents()
-        // https://api.themoviedb.org/3/trending/movie/day?api_key=0b6427eb04f70a5789d6598caaef7c17
+      
         url.host = "api.themoviedb.org"
         url.scheme = "https"
         url.path = "/3/trending/movie/day"

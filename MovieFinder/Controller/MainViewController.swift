@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MainViewController: UIViewController, UITableViewDataSource {
     
@@ -30,7 +31,30 @@ class MainViewController: UIViewController, UITableViewDataSource {
         tableView.rowHeight = 175
                 
     }
+    //MARK: - Search Button Pressed
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Search movie", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Search", style: .default) { (action) in
+            
+            if textField.text != ""{
+                if let movie = textField.text{
+                    self.movieManager.fetchMovie(url: self.webHelper.apiURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
+                    print("Searching...\(movie)")
+                }               
+            } else {
+                print("Nothing added")
+            }
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Search for a movie"
+            textField = alertTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
     }
     
     // MARK: - Table view data source
