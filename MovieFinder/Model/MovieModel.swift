@@ -9,9 +9,9 @@ import Foundation
 
 struct MovieModel {
     
-    var title: String
-    var overview: String
-    var votes: Double
-    var posterPath: String?
+    let title: String
+    let overview: String
+    let votes: Double
+    let posterPath: String?
     
 }

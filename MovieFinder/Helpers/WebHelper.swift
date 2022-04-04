@@ -9,7 +9,7 @@ import Foundation
 
 struct WebHelper {
     
-    var page: String = "1"
+    let page: String = ""
         
     func searchMovieURL(movieTitle: String, apiKey: String) -> URL {
         var url = URLComponents()
@@ -24,8 +24,8 @@ struct WebHelper {
         return URL(string: url.string!)!
     }
     
-    func trendingMovieURL(apiKey: String) -> URL{var url = URLComponents()
-      
+    func trendingMovieURL(apiKey: String) -> URL{
+        var url = URLComponents()
         url.host = "api.themoviedb.org"
         url.scheme = "https"
         url.path = "/3/trending/movie/day"

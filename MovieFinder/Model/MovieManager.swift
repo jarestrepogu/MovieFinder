@@ -12,9 +12,9 @@ protocol MovieManagerDelegate {
 }
 
 struct MovieManager{
-   
+    
     var delegate: MovieManagerDelegate?
-        
+    
     func fetchMovie(url: URL){
         
         let session = URLSession(configuration: .default)
@@ -39,14 +39,20 @@ struct MovieManager{
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(MovieData.self, from: movieData)
-            var movieResults: [MovieModel] = []
-                        
-            for i in 0...decodedData.results.count - 1 {
-                let movieResult = MovieModel(title: decodedData.results[i].title, overview: decodedData.results[i].overview, votes: decodedData.results[i].voteAverage, posterPath: decodedData.results[i].posterPath ?? "")
-                movieResults.append(movieResult)
-            }
+            //            var movieResults: [MovieModel] = []
             
-            return movieResults
+            if !decodedData.results.isEmpty {
+                return decodedData.results.map({ result in
+                    return MovieModel(title: result.title, overview: result.overview, votes: result.voteAverage, posterPath: result.posterPath)
+                })
+                
+                //                for i in 0...decodedData.results.count - 1 {
+                //                    let movieResult = MovieModel(title: decodedData.results[i].title, overview: decodedData.results[i].overview, votes: decodedData.results[i].voteAverage, posterPath: decodedData.results[i].posterPath ?? "")
+                //                    movieResults.append(movieResult)
+                //                }
+            } else {
+                return []
+            }
             
         } catch{
             delegate?.didFailWithError(error: error)
