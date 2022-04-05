@@ -24,12 +24,12 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="OZr-B7-y6E" kind="relationship" relationship="rootViewController" id="Q9S-rs-LLr"/>
+                        <segue destination="OZr-B7-y6E" kind="relationship" relationship="rootViewController" id="Fuj-mJ-mRk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1cS-Hx-AoK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-764" y="72"/>
+            <point key="canvasLocation" x="-929" y="72"/>
         </scene>
         <!--Trending Movies-->
         <scene sceneID="LMI-62-7nN">
@@ -38,7 +38,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CJH-MI-U2v">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.15869641304016113" green="0.21445661783218384" blue="0.30488258600234985" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <searchBar key="tableFooterView" contentMode="redraw" placeholder="Search for a movie..." translucent="NO" id="QHC-AY-TET">
@@ -104,7 +104,7 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHf-z3-TsP" userLabel="Overview">
                                                 <rect key="frame" x="5" y="710.5" width="404" height="408.5"/>
-                                                <mutableString key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec sagittis aliquam malesuada bibendum. Ultricies tristique nulla aliquet enim. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Faucibus purus in massa tempor nec feugiat nisl pretium. Amet consectetur adipiscing elit duis. Bibendum est ultricies integer quis. Eget nunc lobortis mattis aliquam faucibus purus. Neque volutpat ac tincidunt vitae semper quis lectus nulla. Et netus et malesuada fames ac turpis. In nulla posuere sollicitudin aliquam ultrices sagittis orci a. Eget velit aliquet sagittis id consectetur purus ut faucibus. Pulvinar pellentesque habitant morbi tristique senectus et netus et malesuada. Nam aliquam sem et tortor consequat id porta nibh.</mutableString>
+                                                <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec sagittis aliquam malesuada bibendum. Ultricies tristique nulla aliquet enim. Lorem sed risus ultricies tristique nulla aliquet enim tortor. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Faucibus purus in massa tempor nec feugiat nisl pretium. Amet consectetur adipiscing elit duis. Bibendum est ultricies integer quis. Eget nunc lobortis mattis aliquam faucibus purus. Neque volutpat ac tincidunt vitae semper quis lectus nulla. Et netus et malesuada fames ac turpis. In nulla posuere sollicitudin aliquam ultrices sagittis orci a. Eget velit aliquet sagittis id consectetur purus ut faucibus. Pulvinar pellentesque habitant morbi tristique senectus et netus et malesuada. Nam aliquam sem et tortor consequat id porta nibh.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>

@@ -25,17 +25,19 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        showSpinner()
+                
         movieManager.delegate = self
         
         isTrending = true
         
         title = "Trending movies"
-        movieManager.fetchMovie(url: webHelper.trendingMovieURL(apiKey: apiKey.tmdbKey))
-        
+                
         tableView.dataSource = self
         tableView.register(UINib.init(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.rowHeight = 175
+        
+        movieManager.fetchMovie(url: webHelper.trendingMovieURL(apiKey: apiKey.tmdbKey))
     }
     
     //MARK: - Back to Trending Button
@@ -76,7 +78,9 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
                 if let movie = textField.text{
                     self.cachedMovies = self.trendingMovies
                     self.isTrending = false
+                    self.showSpinner()
                     self.movieManager.fetchMovie(url: self.webHelper.searchMovieURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
+                                        
                     self.title = movie
                     self.navigationItem.leftBarButtonItem = self.createBackButton()
                 }
@@ -167,11 +171,13 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.title = "Trending movies"
+                self.removeSpinner()
             }
         } else {
             foundMovies = movie
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.removeSpinner()
             }
         }
     }
