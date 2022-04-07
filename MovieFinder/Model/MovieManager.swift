@@ -43,7 +43,7 @@ struct MovieManager{
             
             if !decodedData.results.isEmpty {
                 return decodedData.results.map({ result in
-                    return MovieModel(title: result.title, overview: result.overview, votes: result.voteAverage, posterPath: result.posterPath)
+                    return MovieModel(id: result.id, title: result.title, overview: result.overview, votes: result.voteAverage, posterPath: result.posterPath)
                 })
                 
                 //                for i in 0...decodedData.results.count - 1 {

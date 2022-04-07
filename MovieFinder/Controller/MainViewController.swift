@@ -26,13 +26,13 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         showSpinner()
-                
+        
         movieManager.delegate = self
         
         isTrending = true
         
         title = "Trending movies"
-                
+        
         tableView.dataSource = self
         tableView.register(UINib.init(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.rowHeight = 175
@@ -43,7 +43,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     //MARK: - Back to Trending Button
     
     func showBackButton (){
-        if navigationItem.leftBarButtonItem == nil{
+        if navigationItem.leftBarButtonItem == nil {
             self.navigationItem.leftBarButtonItem = createBackButton()
         } else {
             self.navigationItem.setLeftBarButton(nil, animated:     true)
@@ -59,7 +59,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         
     }
     
-    func createBackButton() -> UIBarButtonItem{
+    func createBackButton() -> UIBarButtonItem {
         let leftButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.left"), style: .plain, target: self, action: #selector(trendingButtonPressed(_ :)))
         leftButton.tintColor = UIColor.white
         return leftButton
@@ -74,15 +74,15 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         
         let action = UIAlertAction(title: "Search", style: .default) { (action) in
             
-            if textField.text != ""{
-                if let movie = textField.text{
+            if textField.text != "" {
+                if let movie = textField.text {
                     self.cachedMovies = self.trendingMovies
                     self.isTrending = false
                     self.showSpinner()
                     self.movieManager.fetchMovie(url: self.webHelper.searchMovieURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
-                                        
+                    
                     self.title = movie
-                    self.navigationItem.leftBarButtonItem = self.createBackButton()
+                    self.showBackButton()
                 }
             } else {
                 print("Nothing added")
@@ -101,7 +101,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     // MARK: - TableView Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isTrending{
+        if isTrending {
             return trendingMovies.count
         } else {
             return foundMovies.count
@@ -135,6 +135,8 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToDetails", sender: self)
     }
+    
+    //MARK: - Prepare for segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! DetailsViewController

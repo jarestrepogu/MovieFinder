@@ -34,4 +34,15 @@ struct WebHelper {
         ]
         return URL(string: url.string!)!        
     }
+    
+    func whereToWatchURL(movieId: String, apiKey: String) -> URL{
+        var url = URLComponents()
+        url.host = "api.themoviedb.org"
+        url.scheme = "https"
+        url.path = "/3/movie/\(movieId)/watch/providers"
+        url.queryItems = [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ]
+        return URL(string: url.string!)!
+    }
 }
