@@ -7,74 +7,43 @@
 
 import UIKit
 
-protocol ProvidersManagerDelegate {
-    func didUpdateProviders(_ providersManager: ProvidersManager, providers: ProvidersModel)
-    func didFailWithError(error: Error)
-}
-
-struct ProvidersManager{
+struct ProvidersManager {
     
-    var delegate: ProvidersManagerDelegate?
+    func providersURL(movieId: String, apiKey: String) -> URL{
+        var url = URLComponents()
+        url.host = "api.themoviedb.org"
+        url.scheme = "https"
+        url.path = "/3/movie/\(movieId)/watch/providers"
+        url.queryItems = [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ]
+        return URL(string: url.string!)!
+    }
     
-    func fetchProviders(url: URL, countryCode: String){
+    func fetchProviders(movieId: String, apiKey: String, countryCode: String, completionHandler: @escaping (Result<ProviderGroup, Error>) -> Void) {
+        
+        let url = providersURL(movieId: movieId, apiKey: apiKey)
         
         let session = URLSession(configuration: .default)
         
         let task = session.dataTask(with: url) { (data, response, error) in
-            if error != nil{
-                self.delegate?.didFailWithError(error: error!)
+            if let error = error {
+                completionHandler(.failure(error))
                 return
             }
             
             if let safeData = data {
-                if let providers = self.parseJSON(safeData, countryCode){
-                self.delegate?.didUpdateProviders(self, providers: providers)
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let providersData = try decoder.decode(ProvidersData.self, from: safeData)
+                    let group = providersData.results[countryCode] ?? .init(flatrate: nil, buy: nil, rent: nil)
+                    completionHandler(.success(group))
+                } catch {
+                    completionHandler(.failure(error))
                 }
             }
-        }
-        
+        }        
         task.resume()
-    }
-    
-    func parseJSON(_ providersData: Data,_ countryCode: String) -> ProvidersModel?{
-        //        let decoder = JSONDecoder()
-        
-        var fr: [Provider] = []
-        var b: [Provider] = []
-        var r: [Provider] = []
-        
-        if let decodedData = try? JSONSerialization.jsonObject(with: providersData, options: []) as? [String: Any]{
-            
-            if let results = decodedData["results"] as? [String: Any]{
-                if let countryResult = results.filter ({ (resultEntry) -> Bool in
-                    let (key, _) = resultEntry
-                    return countryCode == key
-                })[countryCode] as? [String: Any] {
-                    
-                    if let flatrate = countryResult["flatrate"] as? [[String: Any]]{
-                        for i in 0...flatrate.count - 1{
-                            let frResult = Provider(logoPath: flatrate[i]["logo_path"]! as! String, name: flatrate[i]["provider_name"]! as! String)
-                            fr.append(frResult)
-                        }
-                    }
-                    if let buy = countryResult["buy"] as? [[String: Any]]{
-                        for i in 0...buy.count - 1{
-                            let bResult = Provider(logoPath: buy[i]["logo_path"]! as! String, name: buy[i]["provider_name"]! as! String)
-                            b.append(bResult)
-                        }
-                    }
-                    if let rent = countryResult["rent"] as? [[String: Any]]{
-                        for i in 0...rent.count - 1{
-                            let rResult = Provider(logoPath: rent[i]["logo_path"]! as! String, name: rent[i]["provider_name"]! as! String)
-                            r.append(rResult)
-                        }
-                    }
-                }
-                let providers = ProvidersModel(flatrate: fr, rent: r, buy: b)
-                return providers
-            }
-        }
-//        delegate?.didFailWithError(error: error)
-        return nil
     }
 }

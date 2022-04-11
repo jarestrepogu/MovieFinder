@@ -7,13 +7,10 @@
 
 import UIKit
 
-class WatchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProvidersManagerDelegate {
+class WatchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     
     private var collectionView: UICollectionView?
-    private var providers = ProvidersManager()
-    private var webHelper = WebHelper()
-    private var apiKey = ApiKeys()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +28,10 @@ class WatchViewController: UIViewController, UICollectionViewDataSource, UIColle
         collectionView?.dataSource = self
         collectionView?.backgroundColor = UIColor(named: "BlueBgColor")
         view.addSubview(collectionView!)
-        
-        providers.delegate = self
-        providers.fetchProviders(url: webHelper.whereToWatchURL(movieId: "597", apiKey: apiKey.tmdbKey), countryCode: "CO")
+                
+//        TMDBFacade.fetchProviders(movieId: "597", countryCode: "CO") { (result: Result<ProviderGroup, Error>) in
+//
+//        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,10 +66,8 @@ class WatchViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     
-    func didUpdateProviders(_ providersManager: ProvidersManager, providers: ProvidersModel) {
-        print(providers.flatrate?[0].logoPath)
-        print(providers.rent?[0].name)
-        print(providers.buy?[0].logoPath)
+    func didUpdateProviders(_ providersManager: ProvidersManager, providers: ProvidersData) {
+        print(providers.results)
     }
     
     func didFailWithError(error: Error) {

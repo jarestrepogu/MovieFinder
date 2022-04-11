@@ -8,26 +8,21 @@
 import UIKit
 import Kingfisher
 
-class MainViewController: UITableViewController, MovieManagerDelegate{
+class MainViewController: UITableViewController {
     
     @IBOutlet weak var backbutton: UIBarButtonItem!
     @IBOutlet weak var searchMovieBar: UISearchBar!
     
-    private var movieManager = MovieManager()
-    private var posterManager = PosterManager()
-    private let webHelper = WebHelper()
-    private let apiKey = ApiKeys()
+    let facade = FacadeMovieFinder()
     
-    private var trendingMovies = [MovieModel]()
-    private var foundMovies = [MovieModel]()
-    private var cachedMovies = [MovieModel]()
+    private var trendingMovies = [Movie]()
+    private var foundMovies = [Movie]()
+    private var cachedMovies = [Movie]()
     private var isTrending = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showSpinner()
-        
-        movieManager.delegate = self
         
         isTrending = true
         
@@ -37,7 +32,13 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         tableView.register(UINib.init(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.rowHeight = 175
         
-        movieManager.fetchMovie(url: webHelper.trendingMovieURL(apiKey: apiKey.tmdbKey))
+        tableView.reloadData()
+        removeSpinner()
+        
+//        facade.getProviders(movieId: 597, countryCode: "CO")
+        trendingMovies.append(contentsOf: facade.getMovies(isTrending, nil))
+        print(trendingMovies)
+
     }
     
     //MARK: - Back to Trending Button
@@ -79,7 +80,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
                     self.cachedMovies = self.trendingMovies
                     self.isTrending = false
                     self.showSpinner()
-                    self.movieManager.fetchMovie(url: self.webHelper.searchMovieURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
+//                    self.movieManager.fetchMovie(url: self.webHelper.searchMovieURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
                     
                     self.title = movie
                     self.showBackButton()
@@ -110,7 +111,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var movie: MovieModel
+        var movie: Movie
         
         if isTrending {
             movie = trendingMovies[indexPath.row]
@@ -121,10 +122,10 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MovieCell
         cell.movieTitle.text = movie.title
         cell.movieOverview.text = movie.overview
-        cell.movieVotes.text = String(movie.votes)
+        cell.movieVotes.text = String(movie.voteAverage)
         if let poster = movie.posterPath {
-            let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
-            cell.posterImage.kf.setImage(with: posterURL)
+//            let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
+//            cell.posterImage.kf.setImage(with: posterURL)
         }
         
         return cell
@@ -143,7 +144,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         
         destinationVC.loadViewIfNeeded()
         
-        var movie: [MovieModel]
+        var movie: [Movie]
         
         if isTrending {
             movie = trendingMovies
@@ -153,39 +154,15 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.movieTitle.text = movie[indexPath.row].title
-            destinationVC.movieVotes.text = String(movie[indexPath.row].votes)
+            destinationVC.movieVotes.text = String(movie[indexPath.row].voteAverage)
             destinationVC.movieOverview.text = movie[indexPath.row].overview
             
             if let poster = movie[indexPath.row].posterPath {
-                let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
-                destinationVC.posterImage.kf.setImage(with: posterURL)
+//                let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
+//                destinationVC.posterImage.kf.setImage(with: posterURL)
             }
             
         }
-    }
-    
-    //MARK: - MovieManagerDelegate
-    
-    func didUpdateMovie(_ movieManager: MovieManager, movie: [MovieModel]) {
-        
-        if isTrending {
-            trendingMovies = movie
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.title = "Trending movies"
-                self.removeSpinner()
-            }
-        } else {
-            foundMovies = movie
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.removeSpinner()
-            }
-        }
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error)
     }
 }
 
