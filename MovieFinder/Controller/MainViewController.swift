@@ -13,7 +13,7 @@ class MainViewController: UITableViewController {
     @IBOutlet weak var backbutton: UIBarButtonItem!
     @IBOutlet weak var searchMovieBar: UISearchBar!
     
-    let facade = FacadeMovieFinder()
+    private let facade = FacadeMovieFinder()
     
     private var trendingMovies = [Movie]()
     private var foundMovies = [Movie]()
@@ -32,13 +32,20 @@ class MainViewController: UITableViewController {
         tableView.register(UINib.init(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.rowHeight = 175
         
-        tableView.reloadData()
-        removeSpinner()
-        
-//        facade.getProviders(movieId: 597, countryCode: "CO")
-        trendingMovies.append(contentsOf: facade.getMovies(isTrending, nil))
-        print(trendingMovies)
-
+        facade.fetchMovies(isTrending: isTrending, movieTitle: nil, completionHandler: { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let resultMovies):
+                    self.trendingMovies = resultMovies
+                    self.tableView.reloadData()
+                    self.removeSpinner()
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        })
     }
     
     //MARK: - Back to Trending Button
@@ -80,8 +87,21 @@ class MainViewController: UITableViewController {
                     self.cachedMovies = self.trendingMovies
                     self.isTrending = false
                     self.showSpinner()
-//                    self.movieManager.fetchMovie(url: self.webHelper.searchMovieURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
-                    
+                    self.facade.fetchMovies(isTrending: self.isTrending, movieTitle: movie, completionHandler: { [weak self] result in
+                        
+                        DispatchQueue.main.async {
+                            guard let self = self else { return }
+                            switch result {
+                            case .success(let resultMovies):
+                                self.foundMovies = resultMovies
+                                self.tableView.reloadData()
+                                self.removeSpinner()
+                                
+                            case .failure(let error):
+                                print(error)
+                            }
+                        }
+                    })
                     self.title = movie
                     self.showBackButton()
                 }
@@ -95,8 +115,7 @@ class MainViewController: UITableViewController {
         }
         alert.addAction(action)
         
-        present(alert, animated: true, completion: nil)
-        
+        present(alert, animated: true, completion: nil)        
     }
     
     // MARK: - TableView Data Source
@@ -124,8 +143,8 @@ class MainViewController: UITableViewController {
         cell.movieOverview.text = movie.overview
         cell.movieVotes.text = String(movie.voteAverage)
         if let poster = movie.posterPath {
-//            let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
-//            cell.posterImage.kf.setImage(with: posterURL)
+            let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
+            cell.posterImage.kf.setImage(with: posterURL)
         }
         
         return cell
@@ -141,7 +160,6 @@ class MainViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! DetailsViewController
-        
         destinationVC.loadViewIfNeeded()
         
         var movie: [Movie]
@@ -156,12 +174,12 @@ class MainViewController: UITableViewController {
             destinationVC.movieTitle.text = movie[indexPath.row].title
             destinationVC.movieVotes.text = String(movie[indexPath.row].voteAverage)
             destinationVC.movieOverview.text = movie[indexPath.row].overview
+            destinationVC.setMovieId(id: movie[indexPath.row].id)
             
             if let poster = movie[indexPath.row].posterPath {
-//                let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
-//                destinationVC.posterImage.kf.setImage(with: posterURL)
+                let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
+                destinationVC.posterImage.kf.setImage(with: posterURL)
             }
-            
         }
     }
 }

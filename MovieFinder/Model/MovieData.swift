@@ -5,7 +5,7 @@
 //  Created by Lina on 28/03/22.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - MovieData
 struct MovieData: Decodable {
@@ -16,16 +16,9 @@ struct MovieData: Decodable {
 
 // MARK: - Result
 struct Movie: Decodable {
-    let adult: Bool
-    let backdropPath: String?
-    let genreIds: [Int]
     let id: Int
-    let originalLanguage: String
     let originalTitle, overview: String
-    let popularity: Double
     let posterPath: String?
-    let releaseDate, title: String
-    let video: Bool
+    let title: String
     let voteAverage: Double
-    let voteCount: Int
 }

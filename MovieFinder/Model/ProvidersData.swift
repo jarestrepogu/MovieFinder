@@ -8,17 +8,17 @@
 import Foundation
 
 // MARK: - ProvidersData
-struct ProvidersData: Codable {
+struct ProvidersData: Decodable {
     let results: [String: ProviderGroup]
 }
 
-struct Provider: Codable {
+struct Provider: Decodable {
     let providerId: Int
     let providerName: String
     let logoPath: String
 }
 
-struct ProviderGroup: Codable {
+struct ProviderGroup: Decodable {
     let flatrate: [Provider]?
     let buy: [Provider]?
     let rent: [Provider]?

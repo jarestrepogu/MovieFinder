@@ -10,6 +10,7 @@ import UIKit
 class ProvidersViewCell: UICollectionViewCell {
     
     static let identifier = "ProvidersViewCell"
+    @IBOutlet weak var providerLogo: UIImageView!
     
     static func nib() -> UINib {
         return UINib(nibName: "ProvidersViewCell", bundle: nil)
@@ -17,7 +18,6 @@ class ProvidersViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = .orange
     }
 
 }
