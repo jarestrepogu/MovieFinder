@@ -39,8 +39,7 @@ class MainViewController: UITableViewController {
                 case .success(let resultMovies):
                     self.trendingMovies = resultMovies
                     self.tableView.reloadData()
-                    self.removeSpinner()
-                    
+                    self.removeSpinner()                    
                 case .failure(let error):
                     print(error)
                 }
@@ -77,9 +76,7 @@ class MainViewController: UITableViewController {
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
-        
-        let alert = UIAlertController(title: "Search for a movie", message: "", preferredStyle: .alert)
-        
+        let alert = UIAlertController(title: "Search for a movie", message: "", preferredStyle: .alert)      
         let action = UIAlertAction(title: "Search", style: .default) { (action) in
             
             if textField.text != "" {
@@ -93,17 +90,29 @@ class MainViewController: UITableViewController {
                             guard let self = self else { return }
                             switch result {
                             case .success(let resultMovies):
-                                self.foundMovies = resultMovies
-                                self.tableView.reloadData()
-                                self.removeSpinner()
+                                if !resultMovies.isEmpty {
+                                    self.foundMovies = resultMovies
+                                    self.title = movie
+                                    self.tableView.reloadData()
+                                    self.removeSpinner()
+                                    self.showBackButton()
+                                } else {
+                                    let nothingAlert = UIAlertController(title: "Nothing found", message: "", preferredStyle: .alert)
+                                    self.present(nothingAlert, animated: true, completion: nil)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                        self.dismiss(animated: true, completion: nil)
+                                        self.isTrending = true
+                                        self.title = "Trending movies"
+                                        self.tableView.reloadData()
+                                        self.removeSpinner()
+                                    }
+                                }
                                 
                             case .failure(let error):
                                 print(error)
                             }
                         }
                     })
-                    self.title = movie
-                    self.showBackButton()
                 }
             } else {
                 print("Nothing added")
@@ -160,8 +169,8 @@ class MainViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! DetailsViewController
-        destinationVC.loadViewIfNeeded()
         
+        destinationVC.loadViewIfNeeded()
         var movie: [Movie]
         
         if isTrending {
@@ -174,7 +183,7 @@ class MainViewController: UITableViewController {
             destinationVC.movieTitle.text = movie[indexPath.row].title
             destinationVC.movieVotes.text = String(movie[indexPath.row].voteAverage)
             destinationVC.movieOverview.text = movie[indexPath.row].overview
-            destinationVC.setMovieId(id: movie[indexPath.row].id)
+            destinationVC.storeMovieId(movie[indexPath.row].id)
             
             if let poster = movie[indexPath.row].posterPath {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")

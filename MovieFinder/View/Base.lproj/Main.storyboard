@@ -63,9 +63,7 @@
                     <connections>
                         <outlet property="searchMovieBar" destination="QHC-AY-TET" id="aVz-WJ-Ibw"/>
                         <outlet property="tableView" destination="CJH-MI-U2v" id="E73-mp-Hus"/>
-                        <segue destination="4ej-S2-Jwx" kind="popoverPresentation" identifier="goToDetails" popoverAnchorView="CJH-MI-U2v" id="VrM-AF-6vA">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
+                        <segue destination="4ej-S2-Jwx" kind="presentation" identifier="goToDetails" id="VrM-AF-6vA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="68n-eh-lc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -166,29 +164,37 @@
                         <outlet property="movieTitle" destination="lsB-qV-jbO" id="8Bw-2i-321"/>
                         <outlet property="movieVotes" destination="VLt-ow-5UQ" id="vS8-ti-ejk"/>
                         <outlet property="posterImage" destination="nRQ-VS-1nY" id="8Az-DJ-Cy5"/>
-                        <segue destination="mLx-Et-KLQ" kind="popoverPresentation" identifier="goToWatch" popoverAnchorView="jm4-aa-5mF" id="q9w-n5-6cN">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
+                        <segue destination="cEc-Qe-glr" kind="presentation" identifier="goToWatch" id="RsH-34-bac"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XCD-Rd-ecR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1002.8985507246377" y="71.651785714285708"/>
         </scene>
-        <!--Watch View Controller-->
-        <scene sceneID="WhG-ft-mRl">
+        <!--Providers View Controller-->
+        <scene sceneID="9la-rt-QZX">
             <objects>
-                <viewController id="mLx-Et-KLQ" customClass="WatchViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="OzA-fs-0UU" customClass="Watchlists">
+                <collectionViewController id="cEc-Qe-glr" customClass="ProvidersViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="iaF-58-KPr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="K7W-lx-DdM"/>
                         <color key="backgroundColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dnt-k8-Bhb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q6L-Qe-KfN">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="cEc-Qe-glr" id="Djo-IX-7Cs"/>
+                            <outlet property="delegate" destination="cEc-Qe-glr" id="YgR-kV-Idc"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VxS-5H-orw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2028" y="72"/>
+            <point key="canvasLocation" x="1988" y="72"/>
         </scene>
     </scenes>
     <resources>

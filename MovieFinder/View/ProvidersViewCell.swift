@@ -9,13 +9,9 @@ import UIKit
 
 class ProvidersViewCell: UICollectionViewCell {
     
-    static let identifier = "ProvidersViewCell"
     @IBOutlet weak var providerLogo: UIImageView!
+    @IBOutlet weak var providerName: UILabel!
     
-    static func nib() -> UINib {
-        return UINib(nibName: "ProvidersViewCell", bundle: nil)
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }

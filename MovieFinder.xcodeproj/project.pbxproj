@@ -24,8 +24,8 @@
 		3EC59BC627FBAF7F0087D950 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC59BC527FBAF7F0087D950 /* DetailsViewController.swift */; };
 		3EC59BC927FBEC6B0087D950 /* ProvidersData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC59BC827FBEC6B0087D950 /* ProvidersData.swift */; };
 		3EC59BCC27FBFC070087D950 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC59BCB27FBFC070087D950 /* Utils.swift */; };
+		3ECCE1FD280625C000B83B1D /* ProvidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCE1FC280625C000B83B1D /* ProvidersViewController.swift */; };
 		3EE3D4BF27FF4B4700CAF397 /* FacadeMovieFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE3D4BE27FF4B4700CAF397 /* FacadeMovieFinder.swift */; };
-		3EF2D24F27FE3825007A828A /* WatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2D24E27FE3825007A828A /* WatchViewController.swift */; };
 		3EF2D25327FE3ABE007A828A /* ProvidersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2D25127FE3ABE007A828A /* ProvidersViewCell.swift */; };
 		3EF2D25427FE3ABE007A828A /* ProvidersViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF2D25227FE3ABE007A828A /* ProvidersViewCell.xib */; };
 		3EF2D25727FE3E9E007A828A /* ProvidersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2D25627FE3E9E007A828A /* ProvidersHeaderView.swift */; };
@@ -50,8 +50,8 @@
 		3EC59BC527FBAF7F0087D950 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		3EC59BC827FBEC6B0087D950 /* ProvidersData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersData.swift; sourceTree = "<group>"; };
 		3EC59BCB27FBFC070087D950 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		3ECCE1FC280625C000B83B1D /* ProvidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersViewController.swift; sourceTree = "<group>"; };
 		3EE3D4BE27FF4B4700CAF397 /* FacadeMovieFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacadeMovieFinder.swift; sourceTree = "<group>"; };
-		3EF2D24E27FE3825007A828A /* WatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewController.swift; sourceTree = "<group>"; };
 		3EF2D25127FE3ABE007A828A /* ProvidersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersViewCell.swift; sourceTree = "<group>"; };
 		3EF2D25227FE3ABE007A828A /* ProvidersViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProvidersViewCell.xib; sourceTree = "<group>"; };
 		3EF2D25627FE3E9E007A828A /* ProvidersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersHeaderView.swift; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 			children = (
 				3E79CB9427F6285000FDDD9E /* MainViewController.swift */,
 				3EC59BC527FBAF7F0087D950 /* DetailsViewController.swift */,
-				3EF2D24E27FE3825007A828A /* WatchViewController.swift */,
+				3ECCE1FC280625C000B83B1D /* ProvidersViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -230,7 +230,6 @@
 			files = (
 				3EE3D4BF27FF4B4700CAF397 /* FacadeMovieFinder.swift in Sources */,
 				3E79CB8A27F612C000FDDD9E /* ApiKeys.swift in Sources */,
-				3EF2D24F27FE3825007A828A /* WatchViewController.swift in Sources */,
 				3EBB0DCF27F2A05C00F589FC /* MovieData.swift in Sources */,
 				3EC59BCC27FBFC070087D950 /* Utils.swift in Sources */,
 				3E79CB9527F6285000FDDD9E /* MainViewController.swift in Sources */,
@@ -243,6 +242,7 @@
 				3EF2D25327FE3ABE007A828A /* ProvidersViewCell.swift in Sources */,
 				3EBB0DAB27F22CBE00F589FC /* AppDelegate.swift in Sources */,
 				3EBB0DAD27F22CBE00F589FC /* SceneDelegate.swift in Sources */,
+				3ECCE1FD280625C000B83B1D /* ProvidersViewController.swift in Sources */,
 				3EC59BC627FBAF7F0087D950 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

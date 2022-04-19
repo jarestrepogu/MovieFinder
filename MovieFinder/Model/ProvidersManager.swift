@@ -23,9 +23,7 @@ struct ProvidersManager {
     func fetchProviders(movieId: String, apiKey: String, countryCode: String, completionHandler: @escaping (Result<ProviderGroup, Error>) -> Void) {
         
         let url = providersURL(movieId: movieId, apiKey: apiKey)
-        
-        let session = URLSession(configuration: .default)
-        
+        let session = URLSession(configuration: .default)        
         let task = session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completionHandler(.failure(error))
