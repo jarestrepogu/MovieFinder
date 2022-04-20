@@ -8,42 +8,48 @@
 import UIKit
 import Kingfisher
 
-class MainViewController: UITableViewController, MovieManagerDelegate{
+class MainViewController: UITableViewController {
     
     @IBOutlet weak var backbutton: UIBarButtonItem!
     @IBOutlet weak var searchMovieBar: UISearchBar!
     
-    private var movieManager = MovieManager()
-    private var posterManager = PosterManager()
-    private let webHelper = WebHelper()
-    private let apiKey = ApiKeys()
+    private let facade = FacadeMovieFinder()
     
-    private var trendingMovies = [MovieModel]()
-    private var foundMovies = [MovieModel]()
-    private var cachedMovies = [MovieModel]()
+    private var trendingMovies = [Movie]()
+    private var foundMovies = [Movie]()
+    private var cachedMovies = [Movie]()
     private var isTrending = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showSpinner()
-                
-        movieManager.delegate = self
         
         isTrending = true
         
         title = "Trending movies"
-                
+        
         tableView.dataSource = self
         tableView.register(UINib.init(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.rowHeight = 175
         
-        movieManager.fetchMovie(url: webHelper.trendingMovieURL(apiKey: apiKey.tmdbKey))
+        facade.fetchMovies(isTrending: isTrending, movieTitle: nil, completionHandler: { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let resultMovies):
+                    self.trendingMovies = resultMovies
+                    self.tableView.reloadData()
+                    self.removeSpinner()                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        })
     }
     
     //MARK: - Back to Trending Button
-    
     func showBackButton (){
-        if navigationItem.leftBarButtonItem == nil{
+        if navigationItem.leftBarButtonItem == nil {
             self.navigationItem.leftBarButtonItem = createBackButton()
         } else {
             self.navigationItem.setLeftBarButton(nil, animated:     true)
@@ -59,7 +65,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         
     }
     
-    func createBackButton() -> UIBarButtonItem{
+    func createBackButton() -> UIBarButtonItem {
         let leftButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.left"), style: .plain, target: self, action: #selector(trendingButtonPressed(_ :)))
         leftButton.tintColor = UIColor.white
         return leftButton
@@ -69,20 +75,43 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
-        
-        let alert = UIAlertController(title: "Search for a movie", message: "", preferredStyle: .alert)
-        
+        let alert = UIAlertController(title: "Search for a movie", message: "", preferredStyle: .alert)      
         let action = UIAlertAction(title: "Search", style: .default) { (action) in
             
-            if textField.text != ""{
-                if let movie = textField.text{
+            if textField.text != "" {
+                if let movie = textField.text {
                     self.cachedMovies = self.trendingMovies
                     self.isTrending = false
                     self.showSpinner()
-                    self.movieManager.fetchMovie(url: self.webHelper.searchMovieURL(movieTitle: movie, apiKey: self.apiKey.tmdbKey))
-                                        
-                    self.title = movie
-                    self.navigationItem.leftBarButtonItem = self.createBackButton()
+                    self.facade.fetchMovies(isTrending: self.isTrending, movieTitle: movie, completionHandler: { [weak self] result in
+                        
+                        DispatchQueue.main.async {
+                            guard let self = self else { return }
+                            switch result {
+                            case .success(let resultMovies):
+                                if !resultMovies.isEmpty {
+                                    self.foundMovies = resultMovies
+                                    self.title = movie
+                                    self.tableView.reloadData()
+                                    self.removeSpinner()
+                                    self.showBackButton()
+                                } else {
+                                    let nothingAlert = UIAlertController(title: "Nothing found", message: "", preferredStyle: .alert)
+                                    self.present(nothingAlert, animated: true, completion: nil)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                        self.dismiss(animated: true, completion: nil)
+                                        self.isTrending = true
+                                        self.title = "Trending movies"
+                                        self.tableView.reloadData()
+                                        self.removeSpinner()
+                                    }
+                                }
+                                
+                            case .failure(let error):
+                                print(error)
+                            }
+                        }
+                    })
                 }
             } else {
                 print("Nothing added")
@@ -94,14 +123,12 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         }
         alert.addAction(action)
         
-        present(alert, animated: true, completion: nil)
-        
+        present(alert, animated: true, completion: nil)        
     }
     
     // MARK: - TableView Data Source
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isTrending{
+        if isTrending {
             return trendingMovies.count
         } else {
             return foundMovies.count
@@ -110,7 +137,7 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var movie: MovieModel
+        var movie: Movie
         
         if isTrending {
             movie = trendingMovies[indexPath.row]
@@ -121,9 +148,9 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MovieCell
         cell.movieTitle.text = movie.title
         cell.movieOverview.text = movie.overview
-        cell.movieVotes.text = String(movie.votes)
+        cell.movieVotes.text = String(movie.voteAverage)
         if let poster = movie.posterPath {
-            let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
+            let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
             cell.posterImage.kf.setImage(with: posterURL)
         }
         
@@ -131,59 +158,18 @@ class MainViewController: UITableViewController, MovieManagerDelegate{
     }
     
     //MARK: - TableView Delegate Methods
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToDetails", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! DetailsViewController
+        let destinationVC = storyboard?.instantiateViewController(identifier: "details") as! DetailsViewController
         
-        destinationVC.loadViewIfNeeded()
-        
-        var movie: [MovieModel]
-        
+        var movies: [Movie]
         if isTrending {
-            movie = trendingMovies
+            movies = trendingMovies
         } else {
-            movie = foundMovies
+            movies = foundMovies
         }
-        
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.movieTitle.text = movie[indexPath.row].title
-            destinationVC.movieVotes.text = String(movie[indexPath.row].votes)
-            destinationVC.movieOverview.text = movie[indexPath.row].overview
-            
-            if let poster = movie[indexPath.row].posterPath {
-                let posterURL = URL(string: self.posterManager.fetchPosterURL(posterPath: poster))
-                destinationVC.posterImage.kf.setImage(with: posterURL)
-            }
-            
-        }
-    }
-    
-    //MARK: - MovieManagerDelegate
-    
-    func didUpdateMovie(_ movieManager: MovieManager, movie: [MovieModel]) {
-        
-        if isTrending {
-            trendingMovies = movie
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.title = "Trending movies"
-                self.removeSpinner()
-            }
-        } else {
-            foundMovies = movie
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.removeSpinner()
-            }
-        }
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error)
+        destinationVC.setMovie(movies[indexPath.row])
+        destinationVC.modalPresentationStyle = .popover
+        present(destinationVC, animated: true, completion: nil)
     }
 }
 

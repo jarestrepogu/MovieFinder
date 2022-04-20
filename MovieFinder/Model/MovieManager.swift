@@ -6,57 +6,65 @@
 //
 import Foundation
 
-protocol MovieManagerDelegate {
-    func didUpdateMovie(_ movieManager: MovieManager, movie: [MovieModel])
-    func didFailWithError(error: Error)
-}
-
 struct MovieManager{
     
-    var delegate: MovieManagerDelegate?
+    let page: String = ""
     
-    func fetchMovie(url: URL){
+    func searchMovieURL(movieTitle: String, apiKey: String) -> URL {
+        var url = URLComponents()
+        url.host = "api.themoviedb.org"
+        url.scheme = "https"
+        url.path = "/3/search/movie"
+        url.queryItems = [
+            URLQueryItem(name: "api_key", value: apiKey),
+            URLQueryItem(name: "query", value: movieTitle),
+            URLQueryItem(name: "page", value: page)
+        ]
+        return URL(string: url.string!)!
+    }
+    
+    func trendingMovieURL(apiKey: String) -> URL{
+        var url = URLComponents()
+        url.host = "api.themoviedb.org"
+        url.scheme = "https"
+        url.path = "/3/trending/movie/day"
+        url.queryItems = [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ]
+        return URL(string: url.string!)!
+    }
+    
+    func fetchMovie(isTrending: Bool, movieTitle: String?, apiKey: String, completionHandler: @escaping (Result<[Movie], Error>) -> Void) {
+        
+        var url = URL(string: "https://api.themoviedb.org")!
+        
+        if isTrending {
+            url = trendingMovieURL(apiKey: apiKey)
+        } else {
+            if let movie = movieTitle {
+                url = searchMovieURL(movieTitle: movie, apiKey: apiKey)
+            }
+        }
         
         let session = URLSession(configuration: .default)
         
         let task = session.dataTask(with: url) { (data, response, error) in
-            if error != nil{
-                self.delegate?.didFailWithError(error: error!)
+            if let error = error {
+                completionHandler(.failure(error))
                 return
             }
             
             if let safeData = data {
-                if let movie = self.parseJSON(safeData){
-                    self.delegate?.didUpdateMovie(self, movie: movie)
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let movieData = try decoder.decode(MovieData.self, from: safeData)
+                    completionHandler(.success(movieData.results))
+                } catch {
+                    completionHandler(.failure(error))
                 }
             }
         }
-        
         task.resume()
     }
-    
-    func parseJSON(_ movieData: Data) -> [MovieModel]?{
-        let decoder = JSONDecoder()
-        do {
-            let decodedData = try decoder.decode(MovieData.self, from: movieData)
-            //            var movieResults: [MovieModel] = []
-            
-            if !decodedData.results.isEmpty {
-                return decodedData.results.map({ result in
-                    return MovieModel(title: result.title, overview: result.overview, votes: result.voteAverage, posterPath: result.posterPath)
-                })
-                
-                //                for i in 0...decodedData.results.count - 1 {
-                //                    let movieResult = MovieModel(title: decodedData.results[i].title, overview: decodedData.results[i].overview, votes: decodedData.results[i].voteAverage, posterPath: decodedData.results[i].posterPath ?? "")
-                //                    movieResults.append(movieResult)
-                //                }
-            } else {
-                return []
-            }
-            
-        } catch{
-            delegate?.didFailWithError(error: error)
-            return nil
-        }
-    }    
 }

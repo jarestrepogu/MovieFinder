@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailsViewController: UIViewController {
-
+    
+    private let facade = FacadeMovieFinder()
+    private var movie = Movie(id: 0, originalTitle: "", overview: "", posterPath: nil, title: "", voteAverage: 0.0)
+    
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieVotes: UILabel!
@@ -16,21 +20,28 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-    @IBAction func whereToWatchPressed(_ sender: UIButton) {
+    override func viewWillAppear(_ animated: Bool) {
+        movieTitle.text = movie.title
+        movieVotes.text = String(movie.voteAverage)
+        movieOverview.text = movie.overview
+        if let poster = movie.posterPath {
+            let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
+            self.posterImage.kf.setImage(with: posterURL)
+        }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func whereToWatchPressed(_ sender: UIButton) {        
+        let destinationVC = storyboard?.instantiateViewController(identifier: "providers") as! ProvidersViewController
+        destinationVC.setMovieId(movie.id)
+        destinationVC.modalPresentationStyle = .popover
+        present(destinationVC, animated: true, completion: nil)
     }
-    */
-
+    
+    // MARK: - View Controller Setup
+    func setMovie(_ movie: Movie) {
+        self.movie = movie
+    }
 }
+
