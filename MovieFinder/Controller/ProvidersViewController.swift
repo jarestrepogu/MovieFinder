@@ -8,80 +8,118 @@
 import UIKit
 import Kingfisher
 
-private let reuseIdentifier = "ProvidersViewCell"
-
-class ProvidersViewController: UICollectionViewController {
+class ProvidersViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     private let facade = FacadeMovieFinder()
+    private var movieId = 0
     private var providers: ProviderGroup?
     private var sections = 0
     private var cells = 0
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView.register(UINib.init(nibName: "ProvidersViewCell", bundle: nil), forCellWithReuseIdentifier: "ProvidersViewCell")
+        self.collectionView.register(ProvidersHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProvidersHeaderView.identifier)
         
     }
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections
+    override func viewWillAppear(_ animated: Bool) {
+        showSpinner()
+        facade.fetchProviders(movieId: movieId, completionHandler: {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let providers):
+                    self.setProviders(providers)
+                    self.collectionView.reloadData()
+                    self.removeSpinner()
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        })
     }
-
-
+    
+    // MARK: UICollectionViewDataSource
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cells
+        switch section {
+        case 0:
+            return providers?.buy?.count ?? 1
+        case 1:
+            return providers?.flatrate?.count ?? 1
+        case 2:
+            return providers?.rent?.count ?? 1
+        default:
+            return 0
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProvidersViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProvidersViewCell", for: indexPath) as! ProvidersViewCell
         
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             if let poster = providers?.buy?[indexPath.row].logoPath, let name = providers?.buy?[indexPath.row].providerName {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
+            } else {
+                cell.providerName.text = "Nothing here"
             }
-        }
-        if indexPath.section == 1 {
+        case 1:
             if let poster = providers?.flatrate?[indexPath.row].logoPath, let name = providers?.flatrate?[indexPath.row].providerName {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
+            } else {
+                cell.providerName.text = "Nothing here"
             }
-        }
-        if indexPath.section == 2 {
+        case 2:
             if let poster = providers?.rent?[indexPath.row].logoPath, let name = providers?.rent?[indexPath.row].providerName {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
+            } else {
+                cell.providerName.text = "Nothing here"
             }
-        } else {
-            cell.providerLogo.image = UIImage(named: "eye.slash")
-            cell.providerName.text = "Nothing"
+        default:
+            cell.providerName.text = "Nothing here"
         }
+        
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProvidersHeaderView.identifier, for: indexPath) as! ProvidersHeaderView
         
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             header.configure(title: "Where to buy:")
             return header
-        }
-        if indexPath.section == 1 {
+        case 1:
             header.configure(title: "Watch on:")
             return header
-        }
-        if indexPath.section == 2 {
+        case 2:
             header.configure(title: "Where to rent:")
             return header
-        } else {
+        default:
             header.configure(title: "No providers in your region.")
             return header
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 40)
+        return CGSize(width: view.frame.width, height: 60)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width / 3.2, height: (view.frame.width / 3.2) + 14)
+    }
+    //MARK: - View Controller Setup
+    func setProviders(_ providers: ProviderGroup) {
+        self.providers = providers
+    }
+    func setMovieId(_ movieId: Int) {
+        self.movieId = movieId
     }
 }

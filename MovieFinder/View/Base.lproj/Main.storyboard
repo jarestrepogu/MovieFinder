@@ -34,7 +34,7 @@
         <!--Trending Movies-->
         <scene sceneID="LMI-62-7nN">
             <objects>
-                <tableViewController id="OZr-B7-y6E" customClass="MainViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="trending" id="OZr-B7-y6E" customClass="MainViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CJH-MI-U2v">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -63,7 +63,6 @@
                     <connections>
                         <outlet property="searchMovieBar" destination="QHC-AY-TET" id="aVz-WJ-Ibw"/>
                         <outlet property="tableView" destination="CJH-MI-U2v" id="E73-mp-Hus"/>
-                        <segue destination="4ej-S2-Jwx" kind="presentation" identifier="goToDetails" id="VrM-AF-6vA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="68n-eh-lc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -73,13 +72,13 @@
         <!--Details View Controller-->
         <scene sceneID="6vI-70-2DE">
             <objects>
-                <viewController id="4ej-S2-Jwx" customClass="DetailsViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="details" id="4ej-S2-Jwx" customClass="DetailsViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j4g-8m-o6D">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1146"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4H-1U-zLz">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="1112"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="1122"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jm4-aa-5mF" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1124"/>
@@ -164,7 +163,6 @@
                         <outlet property="movieTitle" destination="lsB-qV-jbO" id="8Bw-2i-321"/>
                         <outlet property="movieVotes" destination="VLt-ow-5UQ" id="vS8-ti-ejk"/>
                         <outlet property="posterImage" destination="nRQ-VS-1nY" id="8Az-DJ-Cy5"/>
-                        <segue destination="cEc-Qe-glr" kind="presentation" identifier="goToWatch" id="RsH-34-bac"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XCD-Rd-ecR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -174,9 +172,9 @@
         <!--Providers View Controller-->
         <scene sceneID="9la-rt-QZX">
             <objects>
-                <collectionViewController id="cEc-Qe-glr" customClass="ProvidersViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="providers" id="cEc-Qe-glr" customClass="ProvidersViewController" customModule="MovieFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="iaF-58-KPr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q6L-Qe-KfN">

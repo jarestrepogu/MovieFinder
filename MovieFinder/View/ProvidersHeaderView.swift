@@ -15,10 +15,11 @@ class ProvidersHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
     }()
     
-    public func configure(title: String) {
+    func configure(title: String) {
         backgroundColor = UIColor(named: "BlueBgColor")
         label.text = title
         addSubview(label)

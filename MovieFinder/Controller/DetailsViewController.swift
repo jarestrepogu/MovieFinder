@@ -6,46 +6,42 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailsViewController: UIViewController {
     
     private let facade = FacadeMovieFinder()
-    private var movieId = 0
-
+    private var movie = Movie(id: 0, originalTitle: "", overview: "", posterPath: nil, title: "", voteAverage: 0.0)
+    
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieVotes: UILabel!
     @IBOutlet weak var movieOverview: UILabel!
     
-        
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Movie Id in Details view is \(movieId)")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        movieTitle.text = movie.title
+        movieVotes.text = String(movie.voteAverage)
+        movieOverview.text = movie.overview
+        if let poster = movie.posterPath {
+            let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
+            self.posterImage.kf.setImage(with: posterURL)
+        }
     }
     
     @IBAction func whereToWatchPressed(_ sender: UIButton) {        
-        self.performSegue(withIdentifier: "goToWatch", sender: self)
+        let destinationVC = storyboard?.instantiateViewController(identifier: "providers") as! ProvidersViewController
+        destinationVC.setMovieId(movie.id)
+        destinationVC.modalPresentationStyle = .popover
+        present(destinationVC, animated: true, completion: nil)
     }
     
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! ProvidersViewController
-        destinationVC.loadViewIfNeeded()
-        
-        facade.fetchProviders(movieId: movieId, completionHandler: {result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let providers):
-                    print("The Main has the providers \(providers)")
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        })
-    }
-    
-    func storeMovieId(_ movieId: Int) {
-        self.movieId = movieId
+    // MARK: - View Controller Setup
+    func setMovie(_ movie: Movie) {
+        self.movie = movie
     }
 }
+

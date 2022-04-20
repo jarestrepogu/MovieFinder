@@ -48,7 +48,6 @@ class MainViewController: UITableViewController {
     }
     
     //MARK: - Back to Trending Button
-    
     func showBackButton (){
         if navigationItem.leftBarButtonItem == nil {
             self.navigationItem.leftBarButtonItem = createBackButton()
@@ -128,7 +127,6 @@ class MainViewController: UITableViewController {
     }
     
     // MARK: - TableView Data Source
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isTrending {
             return trendingMovies.count
@@ -160,36 +158,18 @@ class MainViewController: UITableViewController {
     }
     
     //MARK: - TableView Delegate Methods
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToDetails", sender: self)
-    }
-    
-    //MARK: - Prepare for segue
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! DetailsViewController
+        let destinationVC = storyboard?.instantiateViewController(identifier: "details") as! DetailsViewController
         
-        destinationVC.loadViewIfNeeded()
-        var movie: [Movie]
-        
+        var movies: [Movie]
         if isTrending {
-            movie = trendingMovies
+            movies = trendingMovies
         } else {
-            movie = foundMovies
+            movies = foundMovies
         }
-        
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.movieTitle.text = movie[indexPath.row].title
-            destinationVC.movieVotes.text = String(movie[indexPath.row].voteAverage)
-            destinationVC.movieOverview.text = movie[indexPath.row].overview
-            destinationVC.storeMovieId(movie[indexPath.row].id)
-            
-            if let poster = movie[indexPath.row].posterPath {
-                let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
-                destinationVC.posterImage.kf.setImage(with: posterURL)
-            }
-        }
+        destinationVC.setMovie(movies[indexPath.row])
+        destinationVC.modalPresentationStyle = .popover
+        present(destinationVC, animated: true, completion: nil)
     }
 }
 
