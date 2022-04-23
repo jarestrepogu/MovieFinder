@@ -13,10 +13,6 @@ class FacadeMovieFinder {
     private var movieManager: MovieManager
     private var providersManager: ProvidersManager
     private let apiKey: ApiKeys
-    
-    private var providersGroup: ProviderGroup?
-    private var providerSections = 0
-    private var providerCells = 0
         
     init(movieManager: MovieManager = MovieManager(), providersManager: ProvidersManager = ProvidersManager(), apiKeys: ApiKeys = ApiKeys()) {
         self.movieManager = movieManager

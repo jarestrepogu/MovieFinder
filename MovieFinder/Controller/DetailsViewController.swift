@@ -8,15 +8,21 @@
 import UIKit
 import Kingfisher
 
-class DetailsViewController: UIViewController {
+final class DetailsViewController: UIViewController {
     
-    private let facade = FacadeMovieFinder()
-    private var movie = Movie(id: 0, originalTitle: "", overview: "", posterPath: nil, title: "", voteAverage: 0.0)
+    private var movie: Movie!
     
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieVotes: UILabel!
     @IBOutlet weak var movieOverview: UILabel!
+    
+    static func build(with movie: Movie) -> DetailsViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(identifier: "details") as! DetailsViewController
+        destinationVC.movie = movie
+        return destinationVC
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,11 +43,6 @@ class DetailsViewController: UIViewController {
         destinationVC.setMovieId(movie.id)
         destinationVC.modalPresentationStyle = .popover
         present(destinationVC, animated: true, completion: nil)
-    }
-    
-    // MARK: - View Controller Setup
-    func setMovie(_ movie: Movie) {
-        self.movie = movie
     }
 }
 

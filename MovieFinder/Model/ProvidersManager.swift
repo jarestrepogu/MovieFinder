@@ -29,7 +29,6 @@ struct ProvidersManager {
                 completionHandler(.failure(error))
                 return
             }
-            
             if let safeData = data {
                 do {
                     let decoder = JSONDecoder()

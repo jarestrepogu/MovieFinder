@@ -13,8 +13,6 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
     private let facade = FacadeMovieFinder()
     private var movieId = 0
     private var providers: ProviderGroup?
-    private var sections = 0
-    private var cells = 0
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +64,7 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
             } else {
-                cell.providerName.text = "Nothing here"
+                cell.providerName.text = Constants.nothingFound
             }
         case 1:
             if let poster = providers?.flatrate?[indexPath.row].logoPath, let name = providers?.flatrate?[indexPath.row].providerName {
@@ -74,7 +72,7 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
             } else {
-                cell.providerName.text = "Nothing here"
+                cell.providerName.text = Constants.nothingFound
             }
         case 2:
             if let poster = providers?.rent?[indexPath.row].logoPath, let name = providers?.rent?[indexPath.row].providerName {
@@ -82,10 +80,10 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
             } else {
-                cell.providerName.text = "Nothing here"
+                cell.providerName.text = Constants.nothingFound
             }
         default:
-            cell.providerName.text = "Nothing here"
+            cell.providerName.text = Constants.nothingFound
         }
         
         return cell
@@ -95,16 +93,16 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
         
         switch indexPath.section {
         case 0:
-            header.configure(title: "Where to buy:")
+            header.configure(title: Constants.Providers.buyTitle)
             return header
         case 1:
-            header.configure(title: "Watch on:")
+            header.configure(title: Constants.Providers.flatRateTitle)
             return header
         case 2:
-            header.configure(title: "Where to rent:")
+            header.configure(title: Constants.Providers.rentTitle)
             return header
         default:
-            header.configure(title: "No providers in your region.")
+            header.configure(title: Constants.Providers.noProviders)
             return header
         }
     }

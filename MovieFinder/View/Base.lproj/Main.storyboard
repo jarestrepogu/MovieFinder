@@ -41,12 +41,6 @@
                         <color key="backgroundColor" red="0.15869641304016113" green="0.21445661783218384" blue="0.30488258600234985" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableFooterView" contentMode="redraw" placeholder="Search for a movie..." translucent="NO" id="QHC-AY-TET">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="barTintColor" red="0.15869638320000001" green="0.2144566178" blue="0.30488258600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                        </searchBar>
                         <connections>
                             <outlet property="dataSource" destination="OZr-B7-y6E" id="Bht-6l-y6I"/>
                             <outlet property="delegate" destination="OZr-B7-y6E" id="4uV-2N-Kb4"/>
@@ -60,10 +54,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="searchMovieBar" destination="QHC-AY-TET" id="aVz-WJ-Ibw"/>
-                        <outlet property="tableView" destination="CJH-MI-U2v" id="E73-mp-Hus"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="68n-eh-lc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,13 +112,17 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="8jI-0s-afw" secondAttribute="trailing" constant="10" id="2iU-gV-dSW"/>
                                             <constraint firstAttribute="trailing" secondItem="UHf-z3-TsP" secondAttribute="trailing" constant="5" id="BZM-rY-6fk"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lsB-qV-jbO" secondAttribute="trailing" constant="20" symbolic="YES" id="ChT-Lf-fJC"/>
                                             <constraint firstAttribute="bottom" secondItem="UHf-z3-TsP" secondAttribute="bottom" constant="5" id="Ibd-aX-Gm3"/>
+                                            <constraint firstItem="VLt-ow-5UQ" firstAttribute="leading" secondItem="jm4-aa-5mF" secondAttribute="leading" constant="5" id="J77-il-ZAy"/>
                                             <constraint firstItem="nRQ-VS-1nY" firstAttribute="centerX" secondItem="jm4-aa-5mF" secondAttribute="centerX" id="M8R-7c-KNx"/>
                                             <constraint firstItem="8jI-0s-afw" firstAttribute="centerY" secondItem="VLt-ow-5UQ" secondAttribute="centerY" id="MQL-WF-wbB"/>
+                                            <constraint firstItem="8jI-0s-afw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VLt-ow-5UQ" secondAttribute="trailing" constant="8" symbolic="YES" id="QS6-nY-OHc"/>
                                             <constraint firstItem="nRQ-VS-1nY" firstAttribute="top" secondItem="jm4-aa-5mF" secondAttribute="top" id="Rz9-9Z-wOo"/>
                                             <constraint firstItem="UHf-z3-TsP" firstAttribute="leading" secondItem="jm4-aa-5mF" secondAttribute="leading" constant="5" id="VUk-BW-T8Z"/>
                                             <constraint firstItem="lsB-qV-jbO" firstAttribute="top" secondItem="nRQ-VS-1nY" secondAttribute="bottom" constant="10" id="gXQ-cw-1Wm"/>
                                             <constraint firstItem="lsB-qV-jbO" firstAttribute="leading" secondItem="nRQ-VS-1nY" secondAttribute="leading" id="hrV-xO-Ya3"/>
+                                            <constraint firstItem="lsB-qV-jbO" firstAttribute="top" secondItem="nRQ-VS-1nY" secondAttribute="bottom" constant="10" id="k8F-Ew-rRA"/>
                                             <constraint firstItem="UHf-z3-TsP" firstAttribute="leading" secondItem="nRQ-VS-1nY" secondAttribute="leading" id="mpv-rm-vpU"/>
                                             <constraint firstItem="VLt-ow-5UQ" firstAttribute="leading" secondItem="lsB-qV-jbO" secondAttribute="leading" id="o33-xj-AdJ"/>
                                             <constraint firstItem="VLt-ow-5UQ" firstAttribute="top" secondItem="lsB-qV-jbO" secondAttribute="bottom" constant="8" id="uPb-da-dbh"/>
