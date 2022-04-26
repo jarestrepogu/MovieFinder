@@ -39,8 +39,7 @@ final class DetailsViewController: UIViewController {
     }
     
     @IBAction func whereToWatchPressed(_ sender: UIButton) {        
-        let destinationVC = storyboard?.instantiateViewController(identifier: "providers") as! ProvidersViewController
-        destinationVC.setMovieId(movie.id)
+        let destinationVC = ProvidersViewController.build(with: movie.id)
         destinationVC.modalPresentationStyle = .popover
         present(destinationVC, animated: true, completion: nil)
     }

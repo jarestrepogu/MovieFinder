@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class MainViewModel {
     enum FetchError {
@@ -16,10 +15,10 @@ final class MainViewModel {
     
     private let facade = FacadeMovieFinder()
     private var trendingMovies = [Movie]() {
-        didSet { moviesDidChanged?() }
+        didSet { moviesDidChange?() }
     }
     private var foundMovies = [Movie]() {
-        didSet { moviesDidChanged?() }
+        didSet { moviesDidChange?() }
     }
     private(set) var query: String?
     var isSearching: Bool {
@@ -37,7 +36,7 @@ final class MainViewModel {
     
     var isLoadingHandler: ((Bool) -> Void)?
     var errorHandler: ((FetchError) -> Void)?
-    var moviesDidChanged: (() -> Void)?
+    var moviesDidChange: (() -> Void)?
     
     func fetchMovies() {
         isLoading = true
@@ -79,6 +78,6 @@ final class MainViewModel {
     
     func stopSeaching() {
         query = nil
-        moviesDidChanged?()
+        moviesDidChange?()
     }
 }

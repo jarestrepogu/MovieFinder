@@ -8,32 +8,58 @@
 import UIKit
 import Kingfisher
 
-class ProvidersViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+final class ProvidersViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    private let facade = FacadeMovieFinder()
-    private var movieId = 0
-    private var providers: ProviderGroup?
-        
+    private var viewModel = ProvidersViewModel()
+    private var movieId: Int!
+    
+    static func build(with movieId: Int) -> ProvidersViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(identifier: "providers") as! ProvidersViewController
+        destinationVC.movieId = movieId
+        return destinationVC
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.dataSource = self
         self.collectionView.register(UINib.init(nibName: "ProvidersViewCell", bundle: nil), forCellWithReuseIdentifier: "ProvidersViewCell")
         self.collectionView.register(ProvidersHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProvidersHeaderView.identifier)
         
+        viewModel.movieId = movieId
+        viewModel.isLoadingHandler = { [unowned self] isLoading in isLoading ? self.showSpinner() : self.removeSpinner()
+        }
+        viewModel.providersDidChange = { [unowned self] in
+            self.collectionView.reloadData()
+        }
+        viewModel.errorHandler = { [unowned self] error in
+            var errorTitle = ""
+            
+            switch error {
+            case .emptyBuy:
+                errorTitle = Constants.Providers.noProviders
+            case .emptyFlatrate:
+                errorTitle = Constants.Providers.noProviders
+            case .emptyRent:
+                errorTitle = Constants.Providers.noProviders
+            case .error(let error):
+                errorTitle = error.localizedDescription
+            }
+            
+            let nothingAlert = UIAlertController(
+                title: errorTitle,
+                message: nil,
+                preferredStyle: .alert
+            )
+            self.present(nothingAlert, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        viewModel.fetchProviders()
     }
     override func viewWillAppear(_ animated: Bool) {
-        showSpinner()
-        facade.fetchProviders(movieId: movieId, completionHandler: {result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let providers):
-                    self.setProviders(providers)
-                    self.collectionView.reloadData()
-                    self.removeSpinner()
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        })
     }
     
     // MARK: UICollectionViewDataSource
@@ -44,22 +70,22 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return providers?.buy?.count ?? 1
+            return viewModel.providers?.buy?.count ?? 0
         case 1:
-            return providers?.flatrate?.count ?? 1
+            return viewModel.providers?.flatrate?.count ?? 0
         case 2:
-            return providers?.rent?.count ?? 1
+            return viewModel.providers?.rent?.count ?? 0
         default:
             return 0
         }
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProvidersViewCell", for: indexPath) as! ProvidersViewCell
         
         switch indexPath.section {
         case 0:
-            if let poster = providers?.buy?[indexPath.row].logoPath, let name = providers?.buy?[indexPath.row].providerName {
+            if let poster = viewModel.providers?.buy?[indexPath.row].logoPath, let name = viewModel.providers?.buy?[indexPath.row].providerName {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
@@ -67,7 +93,7 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
                 cell.providerName.text = Constants.nothingFound
             }
         case 1:
-            if let poster = providers?.flatrate?[indexPath.row].logoPath, let name = providers?.flatrate?[indexPath.row].providerName {
+            if let poster = viewModel.providers?.flatrate?[indexPath.row].logoPath, let name = viewModel.providers?.flatrate?[indexPath.row].providerName {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
@@ -75,7 +101,7 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
                 cell.providerName.text = Constants.nothingFound
             }
         case 2:
-            if let poster = providers?.rent?[indexPath.row].logoPath, let name = providers?.rent?[indexPath.row].providerName {
+            if let poster = viewModel.providers?.rent?[indexPath.row].logoPath, let name = viewModel.providers?.rent?[indexPath.row].providerName {
                 let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(poster)")
                 cell.providerLogo.kf.setImage(with: posterURL)
                 cell.providerName.text = name
@@ -112,12 +138,5 @@ class ProvidersViewController: UICollectionViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width / 3.2, height: (view.frame.width / 3.2) + 14)
-    }
-    //MARK: - View Controller Setup
-    func setProviders(_ providers: ProviderGroup) {
-        self.providers = providers
-    }
-    func setMovieId(_ movieId: Int) {
-        self.movieId = movieId
     }
 }

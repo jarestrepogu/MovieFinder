@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E4026982818964E00751F93 /* ProvidersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4026972818964E00751F93 /* ProvidersViewModel.swift */; };
 		3E79CB8F27F6197D00FDDD9E /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79CB8D27F6197D00FDDD9E /* MovieCell.swift */; };
 		3E79CB9027F6197E00FDDD9E /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E79CB8E27F6197D00FDDD9E /* MovieCell.xib */; };
 		3E79CB9527F6285000FDDD9E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79CB9427F6285000FDDD9E /* MainViewController.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E4026972818964E00751F93 /* ProvidersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersViewModel.swift; sourceTree = "<group>"; };
 		3E79CB8D27F6197D00FDDD9E /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		3E79CB8E27F6197D00FDDD9E /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 		3E79CB9427F6285000FDDD9E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				3EC59BC527FBAF7F0087D950 /* DetailsViewController.swift */,
 				3ECCE1FC280625C000B83B1D /* ProvidersViewController.swift */,
 				3EFB26FB28144FC0001655A3 /* MainViewModel.swift */,
+				3E4026972818964E00751F93 /* ProvidersViewModel.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 			files = (
 				3EE3D4BF27FF4B4700CAF397 /* FacadeMovieFinder.swift in Sources */,
 				3EBB0DCF27F2A05C00F589FC /* MovieData.swift in Sources */,
+				3E4026982818964E00751F93 /* ProvidersViewModel.swift in Sources */,
 				3EC59BCC27FBFC070087D950 /* Utils.swift in Sources */,
 				3E79CB9527F6285000FDDD9E /* MainViewController.swift in Sources */,
 				3EF2D25727FE3E9E007A828A /* ProvidersHeaderView.swift in Sources */,

@@ -28,7 +28,7 @@ final class MainViewController: UITableViewController {
         viewModel.isLoadingHandler = { [unowned self] isLoading in
             isLoading ? self.showSpinner() : self.removeSpinner()
         }
-        viewModel.moviesDidChanged = { [unowned self] in
+        viewModel.moviesDidChange = { [unowned self] in
             self.title = viewModel.title
             self.tableView.reloadData()
             self.showBackButtonIfNeeded()
