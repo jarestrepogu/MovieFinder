@@ -17,6 +17,6 @@ struct Constants {
         static let buyTitle = "Where to buy:"
         static let flatRateTitle = "Watch on:"
         static let rentTitle = "Where to rent:"
-        static let noProviders = "No provider found"
+        static let noProviders = "No providers found"
     }
 }

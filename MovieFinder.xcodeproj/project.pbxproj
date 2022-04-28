@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E4026982818964E00751F93 /* ProvidersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4026972818964E00751F93 /* ProvidersViewModel.swift */; };
+		3E5D24C62819EC41000E69C8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5D24C52819EC41000E69C8 /* NetworkManager.swift */; };
 		3E79CB8F27F6197D00FDDD9E /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79CB8D27F6197D00FDDD9E /* MovieCell.swift */; };
 		3E79CB9027F6197E00FDDD9E /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E79CB8E27F6197D00FDDD9E /* MovieCell.xib */; };
 		3E79CB9527F6285000FDDD9E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79CB9427F6285000FDDD9E /* MainViewController.swift */; };
@@ -20,7 +21,6 @@
 		3EBB0DB727F22CC800F589FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB0DB627F22CC800F589FC /* Assets.xcassets */; };
 		3EBB0DBA27F22CC800F589FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBB0DB827F22CC800F589FC /* LaunchScreen.storyboard */; };
 		3EBB0DC527F28DCA00F589FC /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3EBB0DC427F28DCA00F589FC /* Alamofire */; };
-		3EBB0DCC27F29F4F00F589FC /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB0DCB27F29F4F00F589FC /* MovieManager.swift */; };
 		3EBB0DCF27F2A05C00F589FC /* MovieData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB0DCE27F2A05C00F589FC /* MovieData.swift */; };
 		3EBB0DDA27F2D45000F589FC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3EBB0DD927F2D45000F589FC /* Kingfisher */; };
 		3EC59BC627FBAF7F0087D950 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC59BC527FBAF7F0087D950 /* DetailsViewController.swift */; };
@@ -31,7 +31,6 @@
 		3EF2D25327FE3ABE007A828A /* ProvidersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2D25127FE3ABE007A828A /* ProvidersViewCell.swift */; };
 		3EF2D25427FE3ABE007A828A /* ProvidersViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF2D25227FE3ABE007A828A /* ProvidersViewCell.xib */; };
 		3EF2D25727FE3E9E007A828A /* ProvidersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2D25627FE3E9E007A828A /* ProvidersHeaderView.swift */; };
-		3EF2D25A27FE5B60007A828A /* ProvidersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2D25927FE5B60007A828A /* ProvidersManager.swift */; };
 		3EFB26FC28144FC0001655A3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB26FB28144FC0001655A3 /* MainViewModel.swift */; };
 		3EFB2700281453B2001655A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB26FF281453B2001655A3 /* Constants.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		3E4026972818964E00751F93 /* ProvidersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersViewModel.swift; sourceTree = "<group>"; };
+		3E5D24C52819EC41000E69C8 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3E79CB8D27F6197D00FDDD9E /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		3E79CB8E27F6197D00FDDD9E /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 		3E79CB9427F6285000FDDD9E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -63,7 +63,6 @@
 		3EBB0DB627F22CC800F589FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EBB0DB927F22CC800F589FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EBB0DBB27F22CC800F589FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3EBB0DCB27F29F4F00F589FC /* MovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		3EBB0DCE27F2A05C00F589FC /* MovieData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieData.swift; sourceTree = "<group>"; };
 		3EC59BC527FBAF7F0087D950 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		3EC59BC827FBEC6B0087D950 /* ProvidersData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersData.swift; sourceTree = "<group>"; };
@@ -73,7 +72,6 @@
 		3EF2D25127FE3ABE007A828A /* ProvidersViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersViewCell.swift; sourceTree = "<group>"; };
 		3EF2D25227FE3ABE007A828A /* ProvidersViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProvidersViewCell.xib; sourceTree = "<group>"; };
 		3EF2D25627FE3E9E007A828A /* ProvidersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersHeaderView.swift; sourceTree = "<group>"; };
-		3EF2D25927FE5B60007A828A /* ProvidersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersManager.swift; sourceTree = "<group>"; };
 		3EFB26FB28144FC0001655A3 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		3EFB26FF281453B2001655A3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -181,10 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				3EE3D4BE27FF4B4700CAF397 /* FacadeMovieFinder.swift */,
-				3EBB0DCB27F29F4F00F589FC /* MovieManager.swift */,
 				3EBB0DCE27F2A05C00F589FC /* MovieData.swift */,
 				3EC59BC827FBEC6B0087D950 /* ProvidersData.swift */,
-				3EF2D25927FE5B60007A828A /* ProvidersManager.swift */,
+				3E5D24C52819EC41000E69C8 /* NetworkManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,10 +312,9 @@
 				3EF2D25727FE3E9E007A828A /* ProvidersHeaderView.swift in Sources */,
 				3EBB0DB527F22CBE00F589FC /* MovieFinder.xcdatamodeld in Sources */,
 				3E79CB8F27F6197D00FDDD9E /* MovieCell.swift in Sources */,
-				3EF2D25A27FE5B60007A828A /* ProvidersManager.swift in Sources */,
 				3EFB26FC28144FC0001655A3 /* MainViewModel.swift in Sources */,
 				3EC59BC927FBEC6B0087D950 /* ProvidersData.swift in Sources */,
-				3EBB0DCC27F29F4F00F589FC /* MovieManager.swift in Sources */,
+				3E5D24C62819EC41000E69C8 /* NetworkManager.swift in Sources */,
 				3EF2D25327FE3ABE007A828A /* ProvidersViewCell.swift in Sources */,
 				3EBB0DAB27F22CBE00F589FC /* AppDelegate.swift in Sources */,
 				3EBB0DAD27F22CBE00F589FC /* SceneDelegate.swift in Sources */,

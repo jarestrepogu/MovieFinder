@@ -46,7 +46,7 @@ final class MainViewModel {
                 switch result {
                 case .success(let resultMovies):
                     self.isLoading = false
-                    self.trendingMovies = resultMovies
+                    self.trendingMovies = resultMovies.results
                 case .failure(let error):
                     self.errorHandler?(.error(error))
                 }
@@ -64,10 +64,10 @@ final class MainViewModel {
                 case .success(let resultMovies):
                     self.isLoading = false
                     
-                    if resultMovies.isEmpty {
+                    if resultMovies.results.isEmpty {
                         self.errorHandler?(.emptyResponse)
                     } else {
-                        self.foundMovies = resultMovies
+                        self.foundMovies = resultMovies.results
                     }
                 case .failure(let error):
                     self.errorHandler?(.error(error))

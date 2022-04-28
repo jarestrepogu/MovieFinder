@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - Spinner View
 fileprivate var aView: UIView?
 
 extension UIViewController {

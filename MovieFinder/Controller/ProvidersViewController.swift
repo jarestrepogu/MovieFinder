@@ -33,28 +33,10 @@ final class ProvidersViewController: UICollectionViewController, UICollectionVie
         viewModel.providersDidChange = { [unowned self] in
             self.collectionView.reloadData()
         }
-        viewModel.errorHandler = { [unowned self] error in
-            var errorTitle = ""
-            
+        viewModel.errorHandler = { error in
             switch error {
-            case .emptyBuy:
-                errorTitle = Constants.Providers.noProviders
-            case .emptyFlatrate:
-                errorTitle = Constants.Providers.noProviders
-            case .emptyRent:
-                errorTitle = Constants.Providers.noProviders
             case .error(let error):
-                errorTitle = error.localizedDescription
-            }
-            
-            let nothingAlert = UIAlertController(
-                title: errorTitle,
-                message: nil,
-                preferredStyle: .alert
-            )
-            self.present(nothingAlert, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                self.dismiss(animated: true, completion: nil)
+                print(error.localizedDescription)
             }
         }
         viewModel.fetchProviders()

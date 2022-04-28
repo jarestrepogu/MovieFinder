@@ -9,14 +9,12 @@ import Foundation
 
 final class ProvidersViewModel {
     enum FetchError {
-        case emptyBuy
-        case emptyFlatrate
-        case emptyRent
         case error(Error)
     }
     
     private let facade = FacadeMovieFinder()
     var movieId = Int()
+    var providersGroup: ProvidersData?
     var providers: ProviderGroup? {
         didSet {providersDidChange?()}
     }
@@ -33,18 +31,11 @@ final class ProvidersViewModel {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
-                case .success(let providers):
+                case .success(let providersGroup):
                     self.isLoading = false
-                    if ((providers.buy?.isEmpty) != nil){ // <--------
-                        self.errorHandler?(.emptyBuy)
+                    if let providers = providersGroup.results[Locale.current.regionCode ?? "US"] {
+                        self.providers = providers
                     }
-                    if ((providers.flatrate?.isEmpty) != nil){ // <--------
-                        self.errorHandler?(.emptyFlatrate)
-                    }
-                    if ((providers.rent?.isEmpty) != nil){ // <--------
-                        self.errorHandler?(.emptyRent)
-                    }
-                    self.providers = providers
                 case .failure(let error):
                     self.errorHandler?(.error(error))
                 }
